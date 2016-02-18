@@ -17,24 +17,15 @@ import org.apache.commons.io.IOUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class UserAuthentication extends HttpServlet{
-	
+public class UserSignUp extends HttpServlet {
 	private final MySqlJDBC mysql = new MySqlJDBC();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		resp.getWriter().print("user authentication... Ok  ");
+		resp.getWriter().print("user signup... Ok  ");
 	}
-	
-	
-//	
-//	public String convertStreamToString(InputStream is) { 
-//		StringWriter writer = new StringWriter();
-//		IOUtils.copy(is, writer, encoding);
-//		String theString = writer.toString();
-//	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
@@ -42,26 +33,25 @@ public class UserAuthentication extends HttpServlet{
 	{
 		ServletInputStream in = req.getInputStream();
 		String theString = IOUtils.toString(in, "UTF-8");
-		
-
-		
-		/*--------------------------------*/
-
 		Type type = new TypeToken<Map<String, String>>(){}.getType();
 		Map<String, String> input = new Gson().fromJson(theString, Map.class);
-
-//		String username = req.getParameter("username");
-//		String password = req.getParameter("password");
-		String username = input.get("username");
-		String password = input.get("password");
-		String query = "select users.password from users where username = '" + username + "';";
-		String actualPassword = mysql.executeStmt(query);
-//		System.out.println(username);
-//		System.out.println(password);
-		if(actualPassword.equals(password)) {
-			resp.getWriter().print(1);
-		} else {
-			resp.getWriter().print(0);
-		}
+		
+		//System.out.println(new Gson().toJson(input));
+		
+		resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+	}
+	
+	private String buildInsertQuery(Map<String,String> input) {
+		String query = "";
+		
+		query += "insert into users values (\"" 
+				+ input.get("username") + "\", \"" 
+				+ input.get("password") + "\", \""
+				+ input.get("fullname") + "\", \""
+				+ input.get("sex") + "\", '"
+				+ input.get("birthdate") + "');"
+				;
+		System.out.println(query);
+		return query;
 	}
 }

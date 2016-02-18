@@ -15,7 +15,7 @@ public class ChatService extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		resp.getWriter().print("Chat Service... Ok  ");
+		resp.getWriter().print("Chat Servicee... Ok  ");
 	}
 	
 	@Override

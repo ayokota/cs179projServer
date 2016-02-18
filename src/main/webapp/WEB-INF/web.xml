@@ -16,6 +16,10 @@
 		<servlet-name>chat</servlet-name>
 		<servlet-class>main.ChatService</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>userSignUp</servlet-name>
+		<servlet-class>main.UserSignUp</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>main</servlet-name>
@@ -25,9 +29,13 @@
 		<servlet-name>userAuth</servlet-name>
 		<url-pattern>/userAuthentication</url-pattern>
 	</servlet-mapping>
-		<servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>chat</servlet-name>
 		<url-pattern>/chatService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>userSignUp</servlet-name>
+		<url-pattern>/userSignUp</url-pattern>
 	</servlet-mapping>
 </web-app>
 
