@@ -148,7 +148,6 @@ public class HTTP {
         params.put("repassword", "akiyo123");
         params.put("fullname", "Akiyo Yokota");
         params.put("sex", "m");
-        params.put("birthdate", "1992-10-04");
         final String json = new Gson().toJson(params);
 
 
