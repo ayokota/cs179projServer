@@ -56,8 +56,8 @@ public class UserAuthentication extends HttpServlet{
 		String password = input.get("password");
 		String query = "select users.password from users where username = '" + username + "';";
 		String actualPassword = mysql.executeStmt(query);
-//		System.out.println(username);
-//		System.out.println(password);
+		System.out.println(username);
+		System.out.println(password);
 		if(actualPassword.equals(password)) {
 			resp.getWriter().print(1);
 		} else {

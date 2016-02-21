@@ -143,17 +143,31 @@ public class HTTP {
 		urlParameters.add(new BasicNameValuePair("password", "pass123"));
 
 		Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "ayoko001");
-        params.put("password", "akiyo123");
-        params.put("repassword", "akiyo123");
-        params.put("fullname", "Akiyo Yokota");
-        params.put("sex", "m");
+//        params.put("username", "ayoko001");
+//        params.put("password", "akiyo123");
+//        params.put("repassword", "akiyo123");
+//        params.put("fullname", "Akiyo Yokota");
+//        params.put("sex", "m");
+		
+//		params.put("username", "ayoko001");
+//		params.put("oldpassword", "234342");
+//		params.put("newpassword", "akiyo456");
+//		params.put("newfullname", "Travis Phan");
+		
+		
+		params.put("user1", "ayoko001");
         final String json = new Gson().toJson(params);
 
+		//System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userAuthentication", json));
 
-		//System.out.println(new httpclient().post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userAuthentication", urlParameters));
+		//System.out.println(new HTTP().post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userAuthentication", urlParameters));
 		//System.out.println(new httpclient().post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/chatService", urlParameters));
-		System.out.println(new HTTP().Post("http://localhost:8080/main_server/userSignUp", json));
+		//System.out.println(new HTTP().Post("http://localhost:8080/main_server/userSignUp", json));
+        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/userAuthentication", json));
+       // http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/profUpdate
+        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/profUpdate", json));
+        //System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/profUpdate", json));
+       System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/contacts", json));
 
 	}
 }

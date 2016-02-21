@@ -37,7 +37,7 @@ public class MySqlJDBC {
             while (rs.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     String columnValue = rs.getString(i);
-                    result +=  columnValue ;
+                    result +=  columnValue + " ";
                 }
                 System.out.println("");
             }
