@@ -32,22 +32,26 @@ public class updateProfile extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		ServletInputStream in = req.getInputStream();
-		String theString = IOUtils.toString(in, "UTF-8");
-
-		Type type = new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> input = new Gson().fromJson(theString, Map.class);
-		
-		if(input.containsKey("oldpassword")){
-			if(checkOldPassword(input))
-				resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
-			else {
-				resp.getWriter().print("incorrect password!");
-				return; 
+		try {
+			ServletInputStream in = req.getInputStream();
+			String theString = IOUtils.toString(in, "UTF-8");
+	
+			Type type = new TypeToken<Map<String, String>>(){}.getType();
+			Map<String, String> input = new Gson().fromJson(theString, Map.class);
+			
+			if(input.containsKey("oldpassword")){
+				if(checkOldPassword(input))
+					resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+				else {
+					resp.getWriter().print("incorrect password!");
+					return; 
+				}
 			}
-		}
-		if(input.containsKey("newfullname")){
-			resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+			if(input.containsKey("newfullname")){
+				resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+			}
+		} catch (Exception e) {
+			resp.getWriter().print(e.toString());
 		}
 
 	}
@@ -55,11 +59,15 @@ public class updateProfile extends HttpServlet{
 	private boolean checkOldPassword(Map<String, String> input) {
 		boolean check = false;
 		
-		String oldPassword = input.get("oldpassword");
-		String actualPassword = mysql.executeStmt("select password from users where username='" + input.get("username") + "';");
-		System.out.println(actualPassword);
-		if(oldPassword.equals(actualPassword))
-			check = true;
+		try {
+			String oldPassword = input.get("oldpassword");
+			String actualPassword = mysql.executeStmt("select password from users where username='" + input.get("username") + "';");
+			System.out.println(actualPassword);
+			if(oldPassword.trim().equals(actualPassword.trim()))
+				check = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return check;
 	}
 	
@@ -67,21 +75,25 @@ public class updateProfile extends HttpServlet{
 		String query = "";
 		/* update users set password = 'akiyo123' where username = 'ayoko001'; */
 		
-		if(input.containsKey("oldpassword")) {
-			query = "";
-
-			query += "update users set password = '" + input.get("newpassword") + "' where username = '" 
-			+ input.get("username") + "';";
-			
-			System.out.println(query);
-		}
-		if(input.containsKey("newfullname")) {
-			query = "";
-
-			query += "update users set fullname = '" + input.get("newfullname") + "' where username = '" 
-					+ input.get("username") + "';";
-			
-			System.out.println(query);
+		try {
+			if(input.containsKey("oldpassword")) {
+				query = "";
+	
+				query += "update users set password = '" + input.get("newpassword") + "' where username = '" 
+				+ input.get("username") + "';";
+				
+				System.out.println(query);
+			}
+			if(input.containsKey("newfullname")) {
+				query = "";
+	
+				query += "update users set fullname = '" + input.get("newfullname") + "' where username = '" 
+						+ input.get("username") + "';";
+				
+				System.out.println(query);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return query;

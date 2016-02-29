@@ -22,9 +22,13 @@ public class ChatService extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		String parametersJson = new Gson().toJson(req.getParameterMap());
-
-		
-		resp.getWriter().print(parametersJson);
+		try {
+			String parametersJson = new Gson().toJson(req.getParameterMap());
+	
+			
+			resp.getWriter().print(parametersJson);
+		} catch (Exception e) {
+			resp.getWriter().print(e.toString());
+		}
 	}
 }

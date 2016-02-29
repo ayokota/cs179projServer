@@ -7,28 +7,37 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import main.UserAuthentication;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MySqlJDBC {
 	
-	private Connection conn = null;
+	//private static final Logger logger = LogManager.getLogger(MySqlJDBC.class);
+	
 	private Statement stmt = null;
     private ResultSet rs = null;
     
     private String mysqlUrl = "jdbc:mysql://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:3306/hangout";
     private String username = "username";
     private String password = "password";
+    private Connection conn ;
+
     
     public MySqlJDBC() {
     	try {
     		Class.forName("com.mysql.jdbc.Driver").newInstance();
-    		conn = DriverManager.getConnection(mysqlUrl, username, password);
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		//logger.error("exception occur while initializing JDBC.", e);
     	}
     }
     
     public String executeStmt(String query) {
+    	
     	String result = "";
     	try {
+    		conn = DriverManager.getConnection(mysqlUrl, username, password);
     		stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             
@@ -46,8 +55,10 @@ public class MySqlJDBC {
             rs = null;
             stmt.close();
             stmt=null;
+            conn.close();
+            conn=null;
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		///logger.error("exception occur while executing statement.", e);
     	}
     	return result;
     }
@@ -55,13 +66,18 @@ public class MySqlJDBC {
     public int executeUpdate(String query) {
     	int result = 0;
     	try {
+    		conn = DriverManager.getConnection(mysqlUrl, username, password);
     		stmt = conn.createStatement();
             result = stmt.executeUpdate(query);
             //return 1 means update happens correctly
             //return 0 means update happens incorrectly
 
+            stmt.close();
+            stmt=null;
+            conn.close();
+            conn=null;
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		//logger.error("exception occur while updating statement", e);
     	}
     	return result;
     }

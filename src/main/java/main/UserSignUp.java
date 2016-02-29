@@ -31,14 +31,18 @@ public class UserSignUp extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		ServletInputStream in = req.getInputStream();
-		String theString = IOUtils.toString(in, "UTF-8");
-		Type type = new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> input = new Gson().fromJson(theString, Map.class);
-		
-		//System.out.println(new Gson().toJson(input));
-		
-		resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+		try {
+			ServletInputStream in = req.getInputStream();
+			String theString = IOUtils.toString(in, "UTF-8");
+			Type type = new TypeToken<Map<String, String>>(){}.getType();
+			Map<String, String> input = new Gson().fromJson(theString, Map.class);
+			
+			//System.out.println(new Gson().toJson(input));
+			
+			resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
+		} catch (Exception e) {
+			resp.getWriter().print(e.toString());
+		}
 	}
 	
 	private String buildInsertQuery(Map<String,String> input) {
@@ -50,7 +54,7 @@ public class UserSignUp extends HttpServlet {
 				+ input.get("fullname") + "\", \""
 				+ input.get("sex") + "\");"
 				;
-		System.out.println(query);
+		//System.out.println(query);
 		return query;
 	}
 }

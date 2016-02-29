@@ -34,21 +34,28 @@ public class contacts extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 		throws ServletException, IOException
 	{
-		ServletInputStream in = req.getInputStream();
-		String theString = IOUtils.toString(in, "UTF-8");
-
-		Type type = new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> input = new Gson().fromJson(theString, Map.class);
-		
-		//send friend request, decline or approve
-		if(input.containsKey("user2")) {
+		try {
+			ServletInputStream in = req.getInputStream();
+			String theString = IOUtils.toString(in, "UTF-8");
+	
+			Type type = new TypeToken<Map<String, String>>(){}.getType();
+			Map<String, String> input = new Gson().fromJson(theString, Map.class);
 			
-		} else {		//just to check friend list
-			//resp.getWriter().print(mysql.executeStmt(pullFriendList(input)));
-			String response = mysql.executeStmt(pullFriendList(input));
-			Map<String, String> friendList = formatResponse(response, input.get("user1"));
-			//System.out.println(new Gson().toJson(friendList));
-			resp.getWriter().print(new Gson().toJson(friendList));
+			//send friend request, decline or approve
+			if(input.containsKey("user2")) {
+				resp.getWriter().print(mysql.executeUpdate(updateFriendList(input)));
+			} else if(input.containsKey("check") ){
+				System.out.println("check users");
+				resp.getWriter().print(mysql.executeStmt(checkUserQuery(input.get("check"))));
+			} else {		//just to check friend list
+				//resp.getWriter().print(mysql.executeStmt(pullFriendList(input)));
+				String response = mysql.executeStmt(pullFriendList(input));
+				Map<String, String> friendList = formatResponse(response, input.get("user1"));
+				//System.out.println(new Gson().toJson(friendList));
+				resp.getWriter().print(new Gson().toJson(friendList));
+			}
+		} catch (Exception e) {
+			resp.getWriter().print(e.toString());
 		}
 
 
@@ -56,27 +63,30 @@ public class contacts extends HttpServlet{
 	
 	private Map<String,String> formatResponse(String response, String user) {
 		Map<String,String> result = new HashMap<String,String> ();
-		
-		StringTokenizer st = new StringTokenizer(response);
-		
-		while (st.hasMoreElements()) {
-			//System.out.println(st.nextElement());
-			//if(st.nextElement().equals(user));
-			String user1 = st.nextElement().toString();
-			String user2 = st.nextElement().toString();
-			String status = st.nextElement().toString();
+		try {
+			StringTokenizer st = new StringTokenizer(response);
 			
-			String friend = "";
-			if(user1.equals(user)) {
-				friend = user2;
-			} else if (user2.equals(user)) {
-				friend = user1;
+			while (st.hasMoreElements()) {
+				//System.out.println(st.nextElement());
+				//if(st.nextElement().equals(user));
+				String user1 = st.nextElement().toString();
+				String user2 = st.nextElement().toString();
+				String status = st.nextElement().toString();
+				
+				String friend = "";
+				if(user1.equals(user)) {
+					friend = user2;
+				} else if (user2.equals(user)) {
+					friend = user1;
+				}
+				
+				if(!status.equals("declined")) {
+					result.put(friend, status);
+				}
+				
 			}
-			
-			if(!status.equals("declined")) {
-				result.put(friend, status);
-			}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return result;
@@ -84,10 +94,13 @@ public class contacts extends HttpServlet{
 	
 	private String pullFriendList(Map<String,String> input) {
 		String query = "";
-		
-		query += "select * from contacts where user1='" + input.get("user1") + "'"
-				+ " or user2='" + input.get("user1") + "';";
-		
+		try {
+			query += "select * from contacts where user1='" + input.get("user1") + "'"
+					+ " or user2='" + input.get("user1") + "';";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 		return query;
 	}
 	
@@ -95,8 +108,36 @@ public class contacts extends HttpServlet{
 		String query = "";
 		/* update users set password = 'akiyo123' where username = 'ayoko001'; */
 		
-		
+//		query += "update users set password = '" + input.get("newpassword") + "' where username = '" 
+//				+ input.get("username") + "';";
+		try {
+			if(input.get("status").equals("requested")) {
+				query = "insert into contacts values (\""
+						+ input.get("user1") + "\", \"" 
+						+ input.get("user2") + "\", \""
+						+ input.get("status") + "\");";
+			} else {
+				query += "update contacts set status = '" + input.get("status") + "' where " 
+				+ "(user1 = '" + input.get("user1").trim() + "' and user2 = '" + input.get("user2").trim() + "') or "
+				+ "(user1 = '" + input.get("user2").trim() + "' and user2 = '" + input.get("user1").trim() + "'); " ;
+			}
+			
+			
+			System.out.println(query);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return query;
 	}
 	
+	private String checkUserQuery(String user) {
+		String query = "";
+		
+		try {
+			query = "select count(*) as total from users where username='" + user + "';";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return query;
+	}
 }
