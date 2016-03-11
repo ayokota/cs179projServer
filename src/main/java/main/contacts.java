@@ -95,7 +95,7 @@ public class contacts extends HttpServlet{
 	private String pullFriendList(Map<String,String> input) {
 		String query = "";
 		try {
-			query += "select * from contacts where user1='" + input.get("user1") + "'"
+			query += "select * from contacts where (user1='" + input.get("user1") + "' and status='accepted') "
 					+ " or user2='" + input.get("user1") + "';";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,12 +116,15 @@ public class contacts extends HttpServlet{
 						+ input.get("user1") + "\", \"" 
 						+ input.get("user2") + "\", \""
 						+ input.get("status") + "\");";
-			} else {
+			} else if(input.get("status").equals("accepted")) {
 				query += "update contacts set status = '" + input.get("status") + "' where " 
 				+ "(user1 = '" + input.get("user1").trim() + "' and user2 = '" + input.get("user2").trim() + "') or "
 				+ "(user1 = '" + input.get("user2").trim() + "' and user2 = '" + input.get("user1").trim() + "'); " ;
+			} else {
+				query += "delete from contacts where "
+						+ "(user1 = '" + input.get("user1").trim() + "' and user2 = '" + input.get("user2").trim() + "') or "
+						+ "(user1 = '" + input.get("user2").trim() + "' and user2 = '" + input.get("user1").trim() + "'); " ;
 			}
-			
 			
 			System.out.println(query);
 		} catch (Exception e) {

@@ -6,11 +6,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import main.UserAuthentication;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MySqlJDBC {
 	
@@ -61,6 +58,37 @@ public class MySqlJDBC {
     		///logger.error("exception occur while executing statement.", e);
     	}
     	return result;
+    }
+    
+    public List<String> executeStmtAsList(String query) {
+    	List<String> resultList = new LinkedList<String> ();
+    	
+    	try {
+    		conn = DriverManager.getConnection(mysqlUrl, username, password);
+    		stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()) {
+            	String result = "";
+                for (int i = 1; i <= columnsNumber; i++) {
+                    String columnValue = rs.getString(i);
+                    result +=  columnValue + " ";
+                }
+                resultList.add(result);
+            }
+            
+            rs.close();
+            rs = null;
+            stmt.close();
+            stmt=null;
+            conn.close();
+            conn=null;
+    	} catch (Exception e) {
+    		///logger.error("exception occur while executing statement.", e);
+    	}
+    	return resultList;
     }
     
     public int executeUpdate(String query) {

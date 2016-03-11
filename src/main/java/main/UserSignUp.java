@@ -42,6 +42,7 @@ public class UserSignUp extends HttpServlet {
 			resp.getWriter().print(mysql.executeUpdate(buildInsertQuery(input)));
 		} catch (Exception e) {
 			resp.getWriter().print(e.toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -52,9 +53,9 @@ public class UserSignUp extends HttpServlet {
 				+ input.get("username") + "\", \"" 
 				+ input.get("password") + "\", \""
 				+ input.get("fullname") + "\", \""
-				+ input.get("sex") + "\");"
+				+ input.get("sex") + "\", \"\");"
 				;
-		//System.out.println(query);
+		System.out.println(query);
 		return query;
 	}
 }

@@ -158,23 +158,25 @@ public class HTTP {
         
         /*--------------------- user authentication -----------------------*/
 
-      params.put("username", "ayoko001");
-      params.put("password", "ppp");
-      //params.put("gcmtoken", "dtFmxeUspyY:APA91bGDgxSQtkeVAII0Dt9XI4iszN5WVCVR-gX3NP-RAAYM4S2m9OX-5hFu60xnVyTF9SyweGTINiZzwOQxpNHoFI3XYgYMXCF1xWHFucQlmBKQC-nValR6Vt-_s3yQG63Lb5sRMWgp");
-      params.put("gcmtoken", "fuckyou!!");
-      final String json = new Gson().toJson(params);
-        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/userAuthentication", json));
-		System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userAuthentication", json));
+//      params.put("username", "ayoko001");
+//      params.put("password", "ppp");
+//      //params.put("gcmtoken", "dtFmxeUspyY:APA91bGDgxSQtkeVAII0Dt9XI4iszN5WVCVR-gX3NP-RAAYM4S2m9OX-5hFu60xnVyTF9SyweGTINiZzwOQxpNHoFI3XYgYMXCF1xWHFucQlmBKQC-nValR6Vt-_s3yQG63Lb5sRMWgp");
+//      params.put("gcmtoken", "fuckyou!!");
+//      final String json = new Gson().toJson(params);
+//        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/userAuthentication", json));
+//		System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userAuthentication", json));
 
 //        
-        /*----------------- user sign up ------------------- */
-//        params.put("username", "ayoko003");
+//        /*----------------- user sign up ------------------- */
+//        params.put("username", "ayoko006");
 //        params.put("password", "akiyo123");
 //        params.put("repassword", "akiyo123");
 //        params.put("fullname", "Akiyo Yokota");
 //        params.put("sex", "m");
 //        final String json = new Gson().toJson(params);
-//		System.out.println(new HTTP().Post("http://localhost:8080/main_server/userSignUp", json));
+//		//System.out.println(new HTTP().Post("http://localhost:8080/main_server/userSignUp", json));
+//		System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/userSignUp", json));
+
         
         /*--------------------- prof update -----------------------*/
 //		params.put("username", "ayoko001");
@@ -187,18 +189,67 @@ public class HTTP {
         
         /*--------------------- contacts -----------------------*/
 //		params.put("user1", "ayoko001");
-//		params.put("user2", "reno");
-//		params.put("status", "requested");
-//		params.put("check", "ayoko001");
+//		params.put("user2", "sample");
+//		params.put("status", "declined");
+//		//params.put("check", "ayoko001");
 //
 //		
 //        final String json = new Gson().toJson(params);
-//        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/contacts", json));
-//        System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/contacts", json));
-//        
+//        System.out.println(new HTTP().Post("http://localhost:8080/main_server/contacts", json));
+//        //System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/contacts", json));
+		
+		
+        /*--------------------- chat service -----------------------*/
+//		params.put("gcmtoken", "test");
+//		
+//        final String json = new Gson().toJson(params);
+//        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/chatService", json));
+//        System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/chatService", json));
 
 		
 		//System.out.println(new HTTP().Post("http://pubsub.pubnub.com/v1/push/sub-key/sub-c-caec8254-d91f-11e5-8758-02ee2ddab7fe/devices/cXYv_II4ZEE:APA91bFC66fs57HX-ngUVIs7QL5A-E-8y9MaXLqCTjDYCNZDaBVf50a3SWOO2Ih9dg_59BLdYiXYVpxQ4TlTFGOW3L4lN0HCsBQ-V8T4Qyr3Lm8Wlaxom8jnURvyRWKgsD1SX0KvFIy_?add=ayoko001&type=gcm", ""));
 		//System.out.println(new HTTP().Post("http://pubsub.pubnub.com/v1/push/sub-key/sub-c-caec8254-d91f-11e5-8758-02ee2ddab7fe/devices/cXYv_II4ZEE:APA91bFC66fs57HX-ngUVIs7QL5A-E-8y9MaXLqCTjDYCNZDaBVf50a3SWOO2Ih9dg_59BLdYiXYVpxQ4TlTFGOW3L4lN0HCsBQ-V8T4Qyr3Lm8Wlaxom8jnURvyRWKgsD1SX0KvFIy_?type=gcm",""));
+	
+        /*--------------------- events -----------------------*/
+//		params.put("id", "ayoko001pppp");
+//		params.put("attendee", "worldpeace");
+//		params.put("host", "ayoko001");
+//		params.put("topic", "demo3");
+//		params.put("keyword", "cs179 presentation");
+//		params.put("time", "2016-02-28 10:05:10");
+//		params.put("location", "ucr lab 133");
+//		
+//		params.put("delete", "ayoko001pp");
+//		
+//		
+//		params.put("search", "");
+        final String json = new Gson().toJson(params);
+//        System.out.println(new HTTP().Post("http://localhost:8080/main_server/events", json));
+        System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/events", json));
+
+		
+        /*--------------------- tracking -----------------------*/
+//		params.put("id", "ayoko001pppp");
+//		params.put("attendee", "dog");
+////		//params.put("location", "5");
+////
+////		
+//		
+//        final String json = new Gson().toJson(params);
+////        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/tracking", json));
+//        System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/tracking", json));
+////		
+		//System.out.println(new HTTP().Post("http://pubsub.pubnub.com/v1/push/sub-key/sub-c-caec8254-d91f-11e5-8758-02ee2ddab7fe/devices/cXYv_II4ZEE:APA91bFC66fs57HX-ngUVIs7QL5A-E-8y9MaXLqCTjDYCNZDaBVf50a3SWOO2Ih9dg_59BLdYiXYVpxQ4TlTFGOW3L4lN0HCsBQ-V8T4Qyr3Lm8Wlaxom8jnURvyRWKgsD1SX0KvFIy_?add=ayoko001&type=gcm", ""));
+		//System.out.println(new HTTP().Post("http://pubsub.pubnub.com/v1/push/sub-key/sub-c-caec8254-d91f-11e5-8758-02ee2ddab7fe/devices/cXYv_II4ZEE:APA91bFC66fs57HX-ngUVIs7QL5A-E-8y9MaXLqCTjDYCNZDaBVf50a3SWOO2Ih9dg_59BLdYiXYVpxQ4TlTFGOW3L4lN0HCsBQ-V8T4Qyr3Lm8Wlaxom8jnURvyRWKgsD1SX0KvFIy_?type=gcm",""));
+	
+    	
+        /*--------------------- attendee -----------------------*/
+//		params.put("id", "ayoko001pppp");
+//		//params.put("attendee", "sample2");
+//
+//        final String json = new Gson().toJson(params);
+//        //System.out.println(new HTTP().Post("http://localhost:8080/main_server/attendee", json));
+//        System.out.println(new HTTP().Post("http://ec2-54-201-118-78.us-west-2.compute.amazonaws.com:8080/main_server/attendee", json));
+
 	}
 }
